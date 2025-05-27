@@ -397,7 +397,7 @@ class EnvironmentConditionsPanel(wx.Panel):
         stationRemarkSizer = wx.BoxSizer(wx.HORIZONTAL)
         stationHealthRemarkPanel.SetSizer(stationRemarkSizer)
         stationHealthTxt = wx.StaticText(stationHealthRemarkPanel, label=self.stnRemarkLbl, style=wx.ALIGN_CENTRE_HORIZONTAL)
-        self.stationHealthRemarksCtrl = wx.TextCtrl(stationHealthRemarkPanel, style=wx.TE_PROCESS_ENTER|wx.TE_MULTILINE|wx.TE_BESTWRAP, size=(-1, -1))
+        self.stationHealthRemarksCtrl = wx.TextCtrl(stationHealthRemarkPanel, style=wx.TE_PROCESS_ENTER|wx.TE_MULTILINE|wx.TE_BESTWRAP, size=(-1, 100))
         stationRemarkSizer.Add(stationHealthTxt, 0)
         stationRemarkSizer.Add(self.stationHealthRemarksCtrl, 1, wx.EXPAND)
 
