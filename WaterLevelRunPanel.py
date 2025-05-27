@@ -161,7 +161,6 @@ class WaterLevelRunPanel(wx.Panel):
         self.transferToFrontLbl = "Transfer to Front Page Stage Table"
         self.wls = ["", "WLR1", "WLR2"]
         self.hgs = ["", "HG", "HG2"]
-        self.addRunButLbl = "Add Circuit"
         self.miniFrame = None
         self.dir = dir
         if hasattr(sys, '_MEIPASS'):
@@ -273,12 +272,8 @@ class WaterLevelRunPanel(wx.Panel):
         secondSplitSizer.Add(bar, 0, wx.EXPAND)
         secondSplitSizer.Add(addRunSizer, 0, wx.EXPAND)
 
-        self.addRunButton = wx.Button(self.secondSplitPanel, label=self.addRunButLbl, size=(-1, 50))
-        self.addRunButton.Bind(wx.EVT_BUTTON, self.levelNotes.add)
-
         self.transferSizer = wx.BoxSizer(wx.HORIZONTAL)
         addRunSizer.Add(self.transferSizer, 5, wx.EXPAND|wx.ALL, 5)
-        addRunSizer.Add(self.addRunButton, 0, wx.RIGHT, 5)
 
 
 
