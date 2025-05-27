@@ -110,7 +110,7 @@ class InstrumentDeploymentInfoPanel(wx.Panel):
         self.locatedList = ["On Rod"]
         self.numberOfPanelsList = []
         self.picturedLbl = "Site and/or control pictures were taken."
-        self.preUseCableLbl = "Pre-use Cableway Inspection"
+        self.preUseCableLbl = "Pre-use Cableway Assessment"
         self.preUseCableList = ["Not-required", "Passed", "Failed"]
         self.measureInfoMsg = 'Engineered structure and Other methods will be uploaded to Mid-section at this time.'
 
