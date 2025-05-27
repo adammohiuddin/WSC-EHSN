@@ -78,7 +78,7 @@ class InstrumentDeploymentInfoPanel(wx.Panel):
         self.coEffLbl = "Coefficient"
         self.coefficientList = ["","-1", "1", "0.88"]
         self.methodLbl = "Method"
-        self.methodList = ["", "0.6", "0.2/0.8", "0.6+0.2/0.8", "0.5", "0.5+0.2/0.8", "Surface", "0.2/0.6/0.8", "0.2/0.5/0.8", "ADCP"]
+        self.methodList = ["", "0.6", "0.2/0.8", "0.6+0.2/0.8", "0.6+0.5", "0.5", "0.5+0.2/0.8", "Surface", "0.2/0.6/0.8", "0.2/0.5/0.8", "ADCP"]
         self.locatedLbl = "Located"
         self.metresAboveLbl = "metres above"
         self.weightList = ["", "15", "30", "50", "75", "100", "150", "300"]
