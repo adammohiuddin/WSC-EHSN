@@ -32,7 +32,7 @@ class InstrumentDeploymentInfoPanel(wx.Panel):
         self.structureTypesLbl = 'Structure Type'
         self.structureTypes = ['', 'Weir', 'Flume']
         self.monitoringMethodsLbl = 'Monitoring Methods'
-        self.monitoringMethods = ['', 'Estimated', 'Volumetric', 'Salt Dilution', 'Tracer-dry', ]
+        self.monitoringMethods = ['', 'Estimated', 'Volumetric', 'Salt Dilution', 'Dye Dilution', ]
         self.savedMeasurementMethodIndex = 0
 
         self.deploymentLbl = "Deployment"
