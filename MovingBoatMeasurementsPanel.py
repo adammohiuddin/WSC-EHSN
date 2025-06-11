@@ -950,12 +950,12 @@ class MovingBoatMeasurementsPanel(wx.Panel):
 
 
         button.Bind(wx.EVT_BUTTON, self.OnAddPress)
-        transectCtrl.Bind(wx.EVT_TEXT, self.OnTextEnter)
-        startDistanceCtrl.Bind(wx.EVT_TEXT, self.OnTextEnter)
-        endDistanceCtrl.Bind(wx.EVT_TEXT, self.OnTextEnter)
-        rawDischCtrl.Bind(wx.EVT_TEXT, self.OnTextEnter)
+        #transectCtrl.Bind(wx.EVT_TEXT, self.OnTextEnter)
+        #startDistanceCtrl.Bind(wx.EVT_TEXT, self.OnTextEnter)
+        #endDistanceCtrl.Bind(wx.EVT_TEXT, self.OnTextEnter)
+        #rawDischCtrl.Bind(wx.EVT_TEXT, self.OnTextEnter)
         # finalDisCtrl.Bind(wx.EVT_TEXT, self.OnTextEnter)
-        remarksCtrl.Bind(wx.EVT_TEXT, self.OnTextEnter)
+        #remarksCtrl.Bind(wx.EVT_TEXT, self.OnTextEnter)
 
 
         selectCheckbox.Bind(wx.EVT_CHECKBOX, self.OnCheckbox)
