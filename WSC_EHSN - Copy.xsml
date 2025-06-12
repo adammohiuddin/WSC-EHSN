@@ -527,6 +527,7 @@
 							<td style="width:14%" align="center"><font color="blue"><xsl:value-of select="SRC"/></font></td>
 							<td style="width:9%" align="center">
 								<xsl:choose>
+									<xsl:when test="contains(SRCApp, 'CT')">CT</xsl:when>
 									<xsl:when test="contains(SRCApp, 'RS')">RS</xsl:when>
 									<xsl:when test="contains(SRCApp, 'NR')">NR</xsl:when>
 									<xsl:when test="contains(SRCApp, 'FL')">FL</xsl:when>
