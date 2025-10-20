@@ -32,8 +32,9 @@ class InstrumentDeploymentInfoPanel(wx.Panel):
         self.structureTypesLbl = 'Structure Type'
         self.structureTypes = ['', 'Weir', 'Flume']
         self.monitoringMethodsLbl = 'Monitoring Methods'
-        self.monitoringMethods = ['', 'Estimated', 'Volumetric', 'Salt Dilution', 'Dye Dilution', ]
+        self.monitoringMethods = ['', 'Estimated', 'Volumetric', 'Salt Dilution', 'Dye Dilution', 'Image Velocimetry​']
         self.savedMeasurementMethodIndex = 0
+        self.savedMonitoringMethodIndex = 0
 
         self.deploymentLbl = "Deployment"
         self.deploymentMidsecList = ["", "Wading", "Bridge Upstream", "Bridge Downstream",
@@ -50,7 +51,7 @@ class InstrumentDeploymentInfoPanel(wx.Panel):
         self.gaugeLbl = "gauge"
         self.selectedGauge = self.gaugeLbl
         self.instrumentLbl = "Instrument Type"
-        self.instrumentList = ["", "ADCP", "ADV", "Current Meter"]
+        self.instrumentList = ["", "ADCP", "ADV", "Current Meter", "Conductivity Probe", "Camera"]
         self.instruments = []
         self.models = []
         self.modelLbl = "Model"
@@ -63,8 +64,9 @@ class InstrumentDeploymentInfoPanel(wx.Panel):
         self.modelList3 = ["", "FlowTracker"]
         self.modelListSontek = ["", "Rio Grande", "RiverRay", "StreamPro", "RiverPro"]
         self.modelListTRDI = ["", "M9", "S5"]
+        self.modelListSommer = ["", "TQ-Tracer"]
         self.manufactureLbl = "Manufacturer"
-        self.manufactureList = ["", 'SonTek', 'TRDI']
+        self.manufactureList = ["", 'SonTek', 'TRDI', 'Sommer']
         self.serialNumLbl = "Serial/Meter Number"
         self.serialNumList = []
         self.frequnecies = []
@@ -105,7 +107,8 @@ class InstrumentDeploymentInfoPanel(wx.Panel):
         self.contCondList = ["", "Not Observed", "No Flow", "Clear", "Altered", "Debris", "Algae",
                              "Weeds", "Fill", "Scour", "Shore Ice",
                              "Complete Ice Cover", "Anchor Ice"]
-        self.deploymentWarning = "Unselecting %s will cause loss of entered data such as field review. Are you sure you want to unselect this selection? "
+        self.deploymentWarning = "Unselecting %s will cause loss of entered data such as field review and innovation technology. Are you sure you want to unselect this selection? "
+        self.monitoringWarning = "Unselecting %s will cause loss of entered data such as innovation technology. Are you sure you want to unselect this selection? "
         self.positionMethods = ["", "Tagline", "Marked bridge railing"]
         self.locatedList = ["On Rod"]
         self.numberOfPanelsList = []
@@ -194,6 +197,7 @@ class InstrumentDeploymentInfoPanel(wx.Panel):
         self.monitoringMethodTxt = wx.StaticText(self, label=self.monitoringMethodsLbl,\
                                             style=wx.ALIGN_CENTRE_HORIZONTAL|wx.ALIGN_CENTRE_VERTICAL)
         self.monitoringMethodCombo = wx.ComboBox(self, size=(155, 23), style=wx.CB_READONLY, choices=self.monitoringMethods)
+        self.monitoringMethodCombo.Bind(wx.EVT_COMBOBOX, self.OnMonitoringChangeCB)
         self.monitoringMethodSizer.Add(self.monitoringMethodTxt, 0, wx.EXPAND)
         self.monitoringMethodSizer.Add(self.monitoringMethodCombo, 0, wx.EXPAND)
 
@@ -890,7 +894,7 @@ class InstrumentDeploymentInfoPanel(wx.Panel):
             # self.methodCBListBox.Check(i, check=False)
 
 
-    #After import from the *.dis, double checking the overwriting, and updating corresponding instrument panel and Field reveiw checklist 
+    #After import from the *.dis, double checking the overwriting, and updating corresponding instrument panel and Field reveiw checklist and InnovTech checklist
     def DeploymentCheckListCBCkecking4MidSection(self):
 
         # if len(list(self.methodCBListBox.GetCheckedItems())) > 1:
@@ -921,7 +925,7 @@ class InstrumentDeploymentInfoPanel(wx.Panel):
             return True
 
 
-    #After import from the *.dis, double checking the overwriting, and updating corresponding instrument panel and Field reveiw checklist 
+    #After import from the *.dis, double checking the overwriting, and updating corresponding instrument panel and Field reveiw checklist and InnovTech checklist 
     def DeploymentCheckListCBCkecking4MovingBoat(self):
 
         # if len(list(self.methodCBListBox.GetCheckedItems())) > 1:
@@ -967,6 +971,7 @@ class InstrumentDeploymentInfoPanel(wx.Panel):
             self.horizontalSizer1.Hide(self.monitoringMethodSizer, True)
             # self.monitoringMethodCombo.SetValue('')
             self.SetMonitoringMethodCombo('')
+            self.savedMonitoringMethodIndex = self.monitoringMethods.index(self.monitoringMethodCombo.GetValue())
         else:
             self.horizontalSizer1.Show(self.monitoringMethodSizer, True)
 
@@ -974,7 +979,7 @@ class InstrumentDeploymentInfoPanel(wx.Panel):
 
 
     # Called when the deployment method is changed
-    # update the FRChecklist to appropriate list
+    # update the FRChecklist and InnovTechChecklist to appropriate list
     # Enable the appropriate fields according to Deployment Type
     def OnDeploymentCheckListCB(self, e):
         # selection = [self.adcpByMovingBoatLbl, self.midsectionLbl]
@@ -1007,8 +1012,30 @@ class InstrumentDeploymentInfoPanel(wx.Panel):
             e.Skip()
         
 
+    # Called when the monitoring method is changed
+    # update the InnovTechChecklist to appropriate list
+    def OnMonitoringChangeCB(self, e):
+        selection = self.monitoringMethods
+        obj = e.GetEventObject()
+        flag = True
+        if obj.GetCurrentSelection() != self.savedMonitoringMethodIndex and (self.savedMonitoringMethodIndex == 3 or self.savedMonitoringMethodIndex == 5):
+            dlg = wx.MessageDialog(self, self.monitoringWarning%selection[self.savedMonitoringMethodIndex], 'Warning',
+                              wx.YES_NO | wx.ICON_QUESTION)
+            res = dlg.ShowModal()
+            if res == wx.ID_YES:
+                dlg.Destroy()
+            else:
+                dlg.Destroy()
+                self.monitoringMethodCombo.SetSelection(self.savedMonitoringMethodIndex)
+                flag = False
 
+        if flag:
+            self.savedMonitoringMethodIndex = selection.index(obj.GetValue())
 
+            if self.manager is not None:
+                self.manager.OnMonitoringChange(obj.GetValue())
+
+            e.Skip()
 
 
 
@@ -1355,6 +1382,11 @@ class InstrumentDeploymentInfoPanel(wx.Panel):
                 self.UpdateComboBox(self.modelCmbo, self.modelListTRDI)
             elif self.manufactureCmbo.GetValue().lower() == 'trdi':
                 self.UpdateComboBox(self.modelCmbo, self.modelListSontek)
+            else:
+                self.UpdateComboBox(self.modelCmbo, self.modelList1)
+        if self.instrumentCmbo.GetValue().lower() == 'conductivity probe':
+            if self.manufactureCmbo.GetValue().lower() == 'sommer':
+                self.UpdateComboBox(self.modelCmbo, self.modelListSommer)
             else:
                 self.UpdateComboBox(self.modelCmbo, self.modelList1)
 
