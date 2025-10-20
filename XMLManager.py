@@ -2437,6 +2437,60 @@ def FieldReviewFromXML(FieldReview, frChecklistManager):
     # except:
     #     print "no pictured ckeckbox for field review in xml"
 
+
+# Create XML structure for InnovTech Checklist
+def InnovTechAsXMLTree(InnovTechData, innovTechChecklistManager):
+    
+    depType = SubElement(InnovTechData, "dependencyType")
+    depType.text = str(innovTechChecklistManager.depType)
+
+    monitoringType = SubElement(InnovTechData, "monitoringType")
+    monitoringType.text = str(innovTechChecklistManager.monitoringType)
+
+    total_text = ""
+    InnovTechTable = SubElement(InnovTechData, "InnovTechTable")
+    for i in range(len(innovTechChecklistManager.ctrlSizer.GetChildren())):
+        InnovTechTableRow = SubElement(InnovTechTable, "InnovTechTableRow", row=str(i))
+
+        label = SubElement(InnovTechTableRow, "label")
+        label.text = str(innovTechChecklistManager.GetLabelSizerVal(i))
+
+        text = SubElement(InnovTechTableRow, "text")
+        text.text = innovTechChecklistManager.GetCtrlSizerVal(i)
+
+        total_text = total_text + text.text
+
+    notes = SubElement(InnovTechData, "notes")
+    notes.text = innovTechChecklistManager.notesCtrl
+
+    total_text = total_text + notes.text
+    if len("".join(total_text.split())) > 0:
+        InnovTechData.attrib['empty'] = "False"
+    else:
+        InnovTechData.attrib['empty'] = "True"
+
+
+# Set InnovTech Checklist variables from existing XML structure
+def InnovTechFromXML(InnovTechData, innovTechChecklistManager):
+    
+    depType = InnovTechData.find('dependencyType').text
+    innovTechChecklistManager.depType = "" if depType is None else depType
+    monitoringType = InnovTechData.find('monitoringType').text
+    innovTechChecklistManager.monitoringType = "" if monitoringType is None else monitoringType
+    
+    InnovTechTable = InnovTechData.find('InnovTechTable')
+
+    for InnovTechTableRow in InnovTechTable.findall('InnovTechTableRow'):
+        row = int(InnovTechTableRow.get('row'))
+
+        text = InnovTechTableRow.find('text').text
+
+        innovTechChecklistManager.SetCtrlSizerVal(row, "" if text is None else text)
+
+    notes = InnovTechData.find('notes').text
+    innovTechChecklistManager.notesCtrl = "" if notes is None else notes
+
+
 # Create XML structure for Moving Boat Method information
 def MovingBoatMeasAsXMLTree(MovingBoatMeas, movingBoatMeasurementsManager):
 
