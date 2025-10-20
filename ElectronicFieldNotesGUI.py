@@ -27,6 +27,7 @@ from IngestOptionFrame import *
 from configparser import SafeConfigParser
 from ZoomPanel import *
 # from RemarksPanel import *
+from InnovTechChecklistPanel import *
 
 from MidsectionImportPanel import MidsectionImportPanel
 
@@ -735,12 +736,21 @@ Note: The FlowTracker2 date and time is stored as UTC along with an offset for l
         # self.form6Sizer.Add(self.showBtn, 0, wx.EXPAND)
         # self.form6.SetSizerAndFit(self.form6Sizer)
 
+        # InnovTech tab (containing Salt Dilution and Image Velocimitry details currently)
+        form7Sizer = wx.BoxSizer(wx.VERTICAL)
+        self.form7 = SpecialScrolledPanel(self.layout, style=wx.SIMPLE_BORDER)
+        self.form7.SetupScrolling()
+        self.innovTechChecklist = InnovTechChecklistPanel(self.mode, self.form7, style=wx.SIMPLE_BORDER, size=(1, -1))
+        form7Sizer.Add(self.innovTechChecklist, 1, wx.EXPAND)
+        self.form7.SetSizerAndFit(form7Sizer)
 
         self.layout.AddPage(self.form, "Front Page")
         self.layout.AddPage(self.form2_1, "Level Notes")
         self.layout.AddPage(self.form3, "Moving Boat")
         self.layout.AddPage(self.form4, "Mid-Section")
         self.layout.AddPage(self.form5, "Field Review")
+        self.layout.AddPage(self.form7, "Innov. Tech.")
+
         # Attachment Page Added
         self.layout.AddPage(self.form6, "FV Package")
 
