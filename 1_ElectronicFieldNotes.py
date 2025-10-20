@@ -13,6 +13,7 @@ from PartyInfoManager import *
 from WaterLevelRunManager import *
 # from AnnualLevellingManager import *
 from FRChecklistManager import *
+from InnovTechChecklistManager import *
 from MovingBoatMeasurementsManager import *
 from MidSectionMeasurementsManager import *
 # from RemarksManager import *
@@ -234,6 +235,7 @@ class ElectronicHydrometricSurveyNotes:
         self.waterLevelRunManager = WaterLevelRunManager(mode, self.gui.waterLevelRun, self)
         # self.annualLevelNotesManager = AnnualLevellingManager(mode, self.gui.annualLevelNotes, self)
         self.frChecklistManager = FRChecklistManager(mode, self.gui.frChecklist, self)
+        self.innovTechChecklistManager = InnovTechChecklistManager(mode, self.gui.innovTechChecklist, self)
         self.movingBoatMeasurementsManager = MovingBoatMeasurementsManager(mode, self.gui.movingBoatMeasurements, self)
         self.midsecMeasurementsManager = MidSectionMeasurementsManager(mode, self.gui.midsecMeasurements, self)
         # self.ratingCurveExtractionToolmanager = RatingCurveExtractionToolManager()
@@ -252,13 +254,17 @@ class ElectronicHydrometricSurveyNotes:
 
 
 
-    # Update the Field Review Checklist with the value of depType
+    # Update the Field Review Checklist and the InnovTech Checklist with the value of depType
     def DeploymentUpdate(self, depType):
         self.frChecklistManager.changeDepType(depType)
+        self.innovTechChecklistManager.changeDepType(depType)
 
 
     def FieldReviewChecklistUpdate(self, val):
         self.frChecklistManager.onInstrumentType(val)
+
+    def InnovTechChecklistUpdate(self, choice):
+        self.innovTechChecklistManager.onMonitoringType(choice)
 
     def ExportAsPDFWithoutOpen(self, filePath, xslPath):
         if mode == "DEBUG":
@@ -725,6 +731,9 @@ class ElectronicHydrometricSurveyNotes:
         FieldReview = SubElement(EHSN, "FieldReview")
         self.FieldReviewAsXMLTree(FieldReview)
 
+        #InnovTech Checklist
+        InnovTechData = SubElement(EHSN, "InnovTech")
+        self.InnovTechAsXMLTree(InnovTechData)
 
         #Page 4
         #ADCP Measurements
@@ -870,6 +879,10 @@ class ElectronicHydrometricSurveyNotes:
         Attachments = EHSN.find('Attachments')
         self.AttachmentFromXML(Attachments)
 
+        #Seventh Page
+        InnovTechData = EHSN.find('InnovTech')
+        self.InnovTechFromXML(InnovTechData)
+
         #Upload Record
 
         self.uploadRecord = EHSN.find('AQ_Upload_Record')
@@ -965,6 +978,12 @@ class ElectronicHydrometricSurveyNotes:
 
     def FieldReviewFromXML(self, FieldReview):
         XMLManager.FieldReviewFromXML(FieldReview, self.frChecklistManager)
+
+    def InnovTechAsXMLTree(self, InnovTechData):
+        XMLManager.InnovTechAsXMLTree(InnovTechData, self.innovTechChecklistManager)
+
+    def InnovTechFromXML(self, InnovTechData):
+        XMLManager.InnovTechFromXML(InnovTechData, self.innovTechChecklistManager)
 
 
     def MovingBoatMeasAsXMLTree(self, MovingBoatMeas):
@@ -1270,6 +1289,9 @@ class ElectronicHydrometricSurveyNotes:
 
         #frChecklistManager
         self.frChecklistManager.GetSiteNotesCtrl().Bind(wx.EVT_KILL_FOCUS, self.gui.OnAutoSave)
+
+        #innovTechChecklistManager
+        self.innovTechChecklistManager.GetNotesCtrl().Bind(wx.EVT_KILL_FOCUS, self.gui.OnAutoSave)
 
 
     def BindCorrectedMGH(self):
