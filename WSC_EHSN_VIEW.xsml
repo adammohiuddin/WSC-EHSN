@@ -129,6 +129,9 @@
 					</xsl:if>
 					</xsl:if>
 					<xsl:apply-templates select="EHSN/FieldReview"/>
+					<xsl:if test="EHSN/InnovTech/@empty='False'">
+						<xsl:apply-templates select="EHSN/InnovTech"/>
+					</xsl:if>
 				    <xsl:apply-templates select="EHSN/Attachments"/>
 
 
@@ -1385,6 +1388,36 @@
 			<td align="left" colspan="3" height="80"><b>Plan Notes: </b><br/>
 				<xsl:call-template name="LFsToBRs">
 					<xsl:with-param name="input" select="planNotes"/>
+				</xsl:call-template>
+			</td>
+		</tr>
+		</table>
+</xsl:template>
+
+
+
+<xsl:template match="EHSN/InnovTech">
+<h2 style="padding-top:15px">Innovation Technology</h2>
+        <table width="100%">
+		<tr>
+			<td width="40%"><b>Details: </b>
+				<xsl:value-of select="monitoringType"/>
+			</td>
+			<td width="60%"><b>Comments: </b>
+			</td>
+		</tr>
+        		
+		<xsl:for-each select="InnovTechTable/InnovTechTableRow">
+			<tr>
+				<td align="left" width="40%"><xsl:value-of select="label"/></td>
+				<td align="left" width="60%"><font color="black"><xsl:value-of select="text"/></font></td>
+			</tr>
+		</xsl:for-each>
+		
+		<tr>
+			<td align="left" colspan="2" height="80"><b>Comments: </b><br/>
+				<xsl:call-template name="LFsToBRs">
+					<xsl:with-param name="input" select="notes"/>
 				</xsl:call-template>
 			</td>
 		</tr>
