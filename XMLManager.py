@@ -14,6 +14,11 @@ import traceback
 from pdb import set_trace
 
 
+
+ 
+def textFix(text):
+    return text.replace('"', "''")
+
 #Calculate the mean time
 def mean(start, end):
     startHour = start.GetHour()
@@ -210,7 +215,7 @@ def StageMeasAsXMLTree(StageMeas, stageMeasManager):
 
 
     stageRemark = SubElement(StageMeas, 'stageRemark')
-    stageRemark.text = stageMeasManager.stageRemarksCtrl
+    stageRemark.text = textFix(stageMeasManager.stageRemarksCtrl)
 
 
 # Set Stage Measurements variables from existing XML structure
@@ -468,10 +473,10 @@ def DischMeasAsXMLTree(DisMeas, disMeasManager):
     condition.text = str(disMeasManager.controlConditionCmbo)
 
     dischargeRemark = SubElement(DisMeas, 'dischargeRemark')
-    dischargeRemark.text = disMeasManager.dischRemarksCtrl
+    dischargeRemark.text = textFix(disMeasManager.dischRemarksCtrl)
 
     controlConditionRemark = SubElement(DisMeas, 'controlConditionRemark')
-    controlConditionRemark.text = disMeasManager.ControlConditionRemarksCtrl
+    controlConditionRemark.text = textFix(disMeasManager.ControlConditionRemarksCtrl)
 
     if disMeasManager.GetAirTempCtrl().GetBackgroundColour() == bkColor:
         airTemp.attrib['imported'] = "1"
@@ -744,7 +749,7 @@ def EnvCondAsXMLTree(EnvCond, envCondManager):
 
 
     stationHealthRemark = SubElement(EnvCond, 'stationHealthRemark')
-    stationHealthRemark.text = envCondManager.stationHealthRemarksCtrl
+    stationHealthRemark.text = textFix(envCondManager.stationHealthRemarksCtrl)
 
 
 # Set Environment Conditions (Station Health / Gauge Maintenance) variables from existing XML structure
@@ -1985,7 +1990,7 @@ def LevelChecksAsXMLTree(LevelChecks, waterLevelRunManager):
                 establish.text = establishText
 
                 comments = SubElement(LevelChecksRow, 'comments')
-                comments.text = commentsText
+                comments.text = textFix(commentsText)
 
                 notEmptyTable = True
 
@@ -2028,7 +2033,7 @@ def LevelChecksAsXMLTree(LevelChecks, waterLevelRunManager):
         surge.text = waterLevelRunManager.GetSurgeVal(int(i))
 
         comment = SubElement(SummaryTableRow, 'Comment')
-        comment.text = waterLevelRunManager.GetCommentVal(int(i))
+        comment.text = textFix(waterLevelRunManager.GetCommentVal(int(i)))
         
         wlElev = SubElement(SummaryTableRow, 'wlElev')
         wlElev.text = waterLevelRunManager.GetWLElevVal(int(i))
@@ -2049,7 +2054,7 @@ def LevelChecksAsXMLTree(LevelChecks, waterLevelRunManager):
 
 
     comments = SubElement(LevelChecks, 'comments')
-    comments.text = waterLevelRunManager.commentsCtrl
+    comments.text = textFix(waterLevelRunManager.commentsCtrl)
 
     surveyedby = SubElement(LevelChecks, 'surveyedby')
     surveyedby.text = waterLevelRunManager.surveyedbyCtrl
@@ -2383,13 +2388,13 @@ def FieldReviewAsXMLTree(FieldReview, frChecklistManager):
         reviewed.text = str(frChecklistManager.GetCBRevSizerVal(i))
 
         text = SubElement(FieldReviewTableRow, "text")
-        text.text = frChecklistManager.GetCtrlSizerVal(i)
+        text.text = textFix(frChecklistManager.GetCtrlSizerVal(i))
 
     siteNotes = SubElement(FieldReview, "siteNotes")
-    siteNotes.text = frChecklistManager.siteNotesCtrl
+    siteNotes.text = textFix(frChecklistManager.siteNotesCtrl)
 
     planNotes = SubElement(FieldReview, "planNotes")
-    planNotes.text = frChecklistManager.planNotesCtrl
+    planNotes.text = textFix(frChecklistManager.planNotesCtrl)
 
     # pictured = SubElement(FieldReview, "pictured")
     # pictured.text = str(frChecklistManager.GetPicturedCkbox())
@@ -2456,12 +2461,12 @@ def InnovTechAsXMLTree(InnovTechData, innovTechChecklistManager):
         label.text = str(innovTechChecklistManager.GetLabelSizerVal(i))
 
         text = SubElement(InnovTechTableRow, "text")
-        text.text = innovTechChecklistManager.GetCtrlSizerVal(i)
+        text.text = textFix(innovTechChecklistManager.GetCtrlSizerVal(i))
 
         total_text = total_text + text.text
 
     notes = SubElement(InnovTechData, "notes")
-    notes.text = innovTechChecklistManager.notesCtrl
+    notes.text = textFix(innovTechChecklistManager.notesCtrl)
 
     total_text = total_text + notes.text
     if len("".join(total_text.split())) > 0:
@@ -2649,7 +2654,7 @@ def MovingBoatMeasAsXMLTree(MovingBoatMeas, movingBoatMeasurementsManager):
             # finalDischarge.text = finalDisText
 
             remarks = SubElement(ADCPMeasRow, "remarks")
-            remarks.text = remarksText
+            remarks.text = textFix(remarksText)
 
             # white = 'White'
             # grey = 'Grey'
@@ -2731,7 +2736,7 @@ def MovingBoatMeasAsXMLTree(MovingBoatMeas, movingBoatMeasurementsManager):
     dischargeDifferenceBaseCurve.text = movingBoatMeasurementsManager.dischDiffBaseCurveCtrl
 
     comments = SubElement(ADCPMeasResults, "comments")
-    comments.text = movingBoatMeasurementsManager.commentsCtrl
+    comments.text = textFix(movingBoatMeasurementsManager.commentsCtrl)
 
     if bedMaterial.text == '' and \
         not movingBoatMeasurementsManager.mbCB and \
