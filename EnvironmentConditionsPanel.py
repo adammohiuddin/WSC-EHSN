@@ -48,6 +48,8 @@ class EnvironmentConditionsPanel(wx.Panel):
         self.orificeTxtLbl = "Orifice Purged"
         self.programTxtLbl = "Downloaded\nProgram"
         self.dataTxtLbl = "Downloaded\nData"
+        self.harnessTxtLbl = "Pre-Use Harness\nAssessment"
+        self.cablewayTxtLbl = "Pre-Use Cableway\nAssessment"
         self.dataPeriodTxtLbl = "Data Period"
         self.dataPeriodFromTxtLbl = "From"
         self.dataPeriodToTxtLbl = "To"
@@ -371,6 +373,18 @@ class EnvironmentConditionsPanel(wx.Panel):
 
         programDataSizerH.Add(programSizer, 1, wx.EXPAND)
         programDataSizerH.Add(dataSizer, 1, wx.EXPAND)
+        
+        #Pre-Use Harness Assessment and Pre-Use Cableway Assessment checkboxes
+        harnessSizer = wx.BoxSizer(wx.HORIZONTAL)
+        self.harnessCB = wx.CheckBox(self, label=self.harnessTxtLbl, size=(85, -1))
+        harnessSizer.Add(self.harnessCB, 1, wx.EXPAND)
+
+        cablewaySizer = wx.BoxSizer(wx.HORIZONTAL)
+        self.cablewayCB = wx.CheckBox(self, label=self.cablewayTxtLbl, size=(-1, -1))
+        cablewaySizer.Add(self.cablewayCB, 1, wx.EXPAND)
+
+        intakeOrificeSizerH.Add(harnessSizer, 1, wx.EXPAND)
+        programDataSizerH.Add(cablewaySizer, 1, wx.EXPAND)
 
         #Data period From/To
         dataPeriodSizer = wx.BoxSizer(wx.VERTICAL)
@@ -686,6 +700,23 @@ class EnvironmentConditionsPanel(wx.Panel):
         return self.dataCB.GetValue()
     def SetDataCB(self, dataCB):
         self.dataCB.SetValue(dataCB)
+
+    
+
+    #Pre-Use Harness Assessment CB
+    def GetHarnessCB(self):
+        return self.harnessCB.GetValue()
+    def SetHarnessCB(self, harnessCB):
+        self.harnessCB.SetValue(harnessCB)
+
+
+
+    #Pre-Use Cableway Assessment CB
+    def GetCablewayCB(self):
+        return self.cablewayCB.GetValue()
+    def SetCablewayCB(self, cablewayCB):
+        self.cablewayCB.SetValue(cablewayCB)
+
 
 
     #Data Period From

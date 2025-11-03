@@ -741,6 +741,12 @@ def EnvCondAsXMLTree(EnvCond, envCondManager):
     downloadedData = SubElement(EnvCond, 'downloadedData')
     downloadedData.text = str(envCondManager.dataCB)
 
+    harnessAssessment = SubElement(EnvCond, 'harnessAssessment')
+    harnessAssessment.text = str(envCondManager.harnessCB)
+
+    cablewayAssessment = SubElement(EnvCond, 'cablewayAssessment')
+    cablewayAssessment.text = str(envCondManager.cablewayCB)
+
     dataPeriodStart = SubElement(EnvCond, 'dataPeriodStart')
     dataPeriodStart.text = str(envCondManager.dataPeriodFromPicker)
 
@@ -846,6 +852,15 @@ def EnvCondFromXML(EnvCond, envCondManager):
         envCondManager.dataCB = True
         envCondManager.GetDataPeriodFromPicker().Enable(True)
         envCondManager.GetDataPeriodToPicker().Enable(True)
+    
+    try:
+        harnessAssessment = EnvCond.find('harnessAssessment').text
+        envCondManager.harnessCB = False if harnessAssessment is None else (False if harnessAssessment == 'False' else True)
+    
+        cablewayAssessment = EnvCond.find('cablewayAssessment').text
+        envCondManager.cablewayCB = False if cablewayAssessment is None else (False if cablewayAssessment == 'False' else True)
+    except:
+        pass
 
 
 

@@ -1169,6 +1169,8 @@ class ElectronicHydrometricSurveyNotes:
         self.envCondManager.GetOrificeCB().Bind(wx.EVT_KILL_FOCUS, self.gui.OnAutoSave)
         self.envCondManager.GetProgramCB().Bind(wx.EVT_KILL_FOCUS, self.gui.OnAutoSave)
         self.envCondManager.GetDataCB().Bind(wx.EVT_KILL_FOCUS, self.gui.OnAutoSave)
+        self.envCondManager.GetHarnessCB().Bind(wx.EVT_KILL_FOCUS, self.gui.OnAutoSave)
+        self.envCondManager.GetCablewayCB().Bind(wx.EVT_KILL_FOCUS, self.gui.OnAutoSave)
         self.envCondManager.GetDataPeriodFromPicker().Bind(wx.EVT_KILL_FOCUS, self.gui.OnAutoSave)
         self.envCondManager.GetDataPeriodToPicker().Bind(wx.EVT_KILL_FOCUS, self.gui.OnAutoSave)
 
