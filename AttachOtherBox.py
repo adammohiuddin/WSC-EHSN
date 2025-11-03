@@ -23,7 +23,7 @@ class AttachOtherBox(scrolled.ScrolledPanel):
         self.columnList = []
         self.categoryList = []
         self.typeList = []
-        self.category = ["Surface Velocity Radar", "Surveyed Cross Section"]
+        self.category = ["Surface Velocity Radar", "Surveyed Cross Section", "Ground Reference Point"]
         self.type = ["File", "Folder"]
 
 
@@ -32,6 +32,8 @@ class AttachOtherBox(scrolled.ScrolledPanel):
         self.folder_SVR_count = 0
         self.file_SCS_count = 0
         self.folder_SCS_count = 0
+        self.file_GRP_count = 0
+        self.folder_GRP_count = 0
 
         self.InitUI()
 
@@ -160,6 +162,8 @@ class AttachOtherBox(scrolled.ScrolledPanel):
         self.folder_SVR_count = 0
         self.file_SCS_count = 0
         self.folder_SCS_count = 0
+        self.file_GRP_count = 0
+        self.folder_GRP_count = 0
 
         # Get the station number
         stnNum = self.parent.parent.genInfo.stnNumCmbo.GetValue()
@@ -188,6 +192,14 @@ class AttachOtherBox(scrolled.ScrolledPanel):
             elif self.typeList[id].GetValue() == "Folder" and self.categoryList[id].GetValue() == "Surveyed Cross Section" and self.addrList[id].GetValue() != "":
                 self.folder_SCS_count += 1
                 self.labelList[id].ChangeValue(stnNum + "_" + dateVal + "_SCS" + str(self.folder_SCS_count))
+            
+            elif self.typeList[id].GetValue() == "File" and self.categoryList[id].GetValue() == "Ground Reference Point" and self.addrList[id].GetValue() != "":
+                self.file_GRP_count += 1
+                self.labelList[id].ChangeValue(stnNum + "_" + dateVal + "_GRP" + str(self.file_GRP_count))
+
+            elif self.typeList[id].GetValue() == "Folder" and self.categoryList[id].GetValue() == "Ground Reference Point" and self.addrList[id].GetValue() != "":
+                self.folder_GRP_count += 1
+                self.labelList[id].ChangeValue(stnNum + "_" + dateVal + "_GRP" + str(self.folder_GRP_count))
 
     def dropdownUpdateLabels(self, evt):
         self.updateLabels()
@@ -264,6 +276,20 @@ class AttachOtherBox(scrolled.ScrolledPanel):
             if self.typeList[x].GetValue() == "Folder" and self.categoryList[x].GetValue() == "Surveyed Cross Section" and self.addrList[x].GetValue() != "":
                 SCSfolderList.append(self.addrList[x].GetValue())
         return SCSfolderList
+
+    def returnGRPFile(self):
+        GRPfileList = []
+        for x in range(len(self.addrList)):
+            if self.typeList[x].GetValue() == "File" and self.categoryList[x].GetValue() == "Ground Reference Point" and self.addrList[x].GetValue() != "":
+                GRPfileList.append(self.addrList[x].GetValue())
+        return GRPfileList
+
+    def returnGRPFolder(self):
+        GRPfolderList = []
+        for x in range(len(self.addrList)):
+            if self.typeList[x].GetValue() == "Folder" and self.categoryList[x].GetValue() == "Ground Reference Point" and self.addrList[x].GetValue() != "":
+                GRPfolderList.append(self.addrList[x].GetValue())
+        return GRPfolderList
 
     def returnPath(self):
         pathList = []

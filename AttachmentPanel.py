@@ -254,6 +254,8 @@ class AttachmentPanel(scrolled.ScrolledPanel):
         SVR_Folder = self.attachBox8.returnSVRFolder()
         SCS_File = self.attachBox8.returnSCSFile()
         SCS_Folder = self.attachBox8.returnSCSFolder()
+        GRP_File = self.attachBox8.returnGRPFile()
+        GRP_Folder = self.attachBox8.returnGRPFolder()
 
         dir_temp = tempfile.mkdtemp()
 
@@ -383,6 +385,15 @@ class AttachmentPanel(scrolled.ScrolledPanel):
                 rename = stnNum + "_" + date + "_SCS" + str(count) + extension
                 shutil.copy(SCS_File[i], dir_temp + "\\" + rename)
                 SCS_File[i] = dir_temp + "\\" + rename
+        # Ground reference point files
+        count = 0
+        for i in range(len(GRP_File)):
+            if valid(GRP_File[i]):
+                count += 1
+                name, extension = os.path.splitext(GRP_File[i])
+                rename = stnNum + "_" + date + "_GRP" + str(count) + extension
+                shutil.copy(GRP_File[i], dir_temp + "\\" + rename)
+                GRP_File[i] = dir_temp + "\\" + rename
 
         self.parent.manager.ExportAsXML(xmlPath, None)
         try:
@@ -526,10 +537,36 @@ class AttachmentPanel(scrolled.ScrolledPanel):
                             print('Unable to delete temp folder')
                             print(str(e))
             
+            # Ground reference point folders
+            count = 0
+            for folder in GRP_Folder:
+                if valid(folder):
+                    count += 1
+                    # Copy the full folder into a new folder of the same name and save the zipped folder in the temp directory
+                    # This is done so the zipped folder contains a folder instead of loose files
+                    zip_folder_name = stnNum + "_" + date + "_GRP" + str(count)
+                    os.mkdir(filePath + zip_folder_name)
+                    copytree(folder, filePath + zip_folder_name + '\\' + zip_folder_name)
+                    make_archive(filePath + zip_folder_name, 'zip', filePath + zip_folder_name)
+                    # Add this zipped folder to the main zip
+                    zipfile.write(filePath + zip_folder_name + '.zip', Tag + "\\" + zip_folder_name + '.zip')
+                    # Remove the folder zip and copied folder from temp
+                    if os.path.exists(filePath + zip_folder_name + '.zip'):
+                        os.remove(filePath + zip_folder_name + '.zip')
+                    if os.path.exists(filePath + zip_folder_name):
+                        try:
+                            rmtree(filePath + zip_folder_name)
+                        except Exception as e:
+                            print('Unable to delete temp folder')
+                            print(str(e))
+            
             for path in SVR_File:
                 if valid(path):
                     zipfile.write(path, Tag + "\\" + ntpath.basename(path))
             for path in SCS_File:
+                if valid(path):
+                    zipfile.write(path, Tag + "\\" + ntpath.basename(path))
+            for path in GRP_File:
                 if valid(path):
                     zipfile.write(path, Tag + "\\" + ntpath.basename(path))
 

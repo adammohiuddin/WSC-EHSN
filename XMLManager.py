@@ -4290,6 +4290,24 @@ def AttachmentAsXMLTree(Attachment, attachmentManager):
     HSN = SubElement(Attachment, "HSN")
     HSN.text = str(attachmentManager.returnHSN())
 
+    scsFiles = SubElement(Attachment, "scsFiles")
+    scsFiles.text = str(attachmentManager.returnSCSFile())
+
+    scsFolders = SubElement(Attachment, "scsFolders")
+    scsFolders.text = str(attachmentManager.returnSCSFolder())
+
+    svrFiles = SubElement(Attachment, "svrFiles")
+    svrFiles.text = str(attachmentManager.returnSVRFile())
+
+    svrFolders = SubElement(Attachment, "svrFolders")
+    svrFolders.text = str(attachmentManager.returnSVRFolder())
+
+    grpFiles = SubElement(Attachment, "grpFiles")
+    grpFiles.text = str(attachmentManager.returnGRPFile())
+
+    grpFolders = SubElement(Attachment, "grpFolders")
+    grpFolders.text = str(attachmentManager.returnGRPFolder())
+
     Zip = SubElement(Attachment, "Zip")
     Zip.text = str(attachmentManager.returnZip())
     
@@ -4459,6 +4477,78 @@ def AttachmentFromXML(Attachment, attachmentManager):
                 attachmentManager.gui.attachBox7.typeList[-1].SetValue("Hydrometric Survey Note")
                 attachmentManager.gui.attachBox7.add()
             attachmentManager.gui.attachBox7.updateLabels()
+    except:
+        pass
+
+    try:
+        scsFiles = convertList(Attachment.find('scsFiles').text)
+        if scsFiles:
+            for addr in scsFiles:
+                attachmentManager.gui.attachBox8.addrList[-1].ChangeValue(addr)
+                attachmentManager.gui.attachBox8.typeList[-1].SetValue("File")
+                attachmentManager.gui.attachBox8.categoryList[-1].SetValue("Surveyed Cross Section")
+                attachmentManager.gui.attachBox8.add()
+            attachmentManager.gui.attachBox8.updateLabels()
+    except:
+        pass
+    
+    try:
+        scsFolders = convertList(Attachment.find('scsFolders').text)
+        if scsFolders:
+            for addr in scsFolders:
+                attachmentManager.gui.attachBox8.addrList[-1].ChangeValue(addr)
+                attachmentManager.gui.attachBox8.typeList[-1].SetValue("Folder")
+                attachmentManager.gui.attachBox8.categoryList[-1].SetValue("Surveyed Cross Section")
+                attachmentManager.gui.attachBox8.add()
+            attachmentManager.gui.attachBox8.updateLabels()
+    except:
+        pass
+
+    try:
+        svrFiles = convertList(Attachment.find('svrFiles').text)
+        if svrFiles:
+            for addr in svrFiles:
+                attachmentManager.gui.attachBox8.addrList[-1].ChangeValue(addr)
+                attachmentManager.gui.attachBox8.typeList[-1].SetValue("File")
+                attachmentManager.gui.attachBox8.categoryList[-1].SetValue("Surface Velocity Radar")
+                attachmentManager.gui.attachBox8.add()
+            attachmentManager.gui.attachBox8.updateLabels()
+    except:
+        pass
+    
+    try:
+        svrFolders = convertList(Attachment.find('svrFolders').text)
+        if svrFolders:
+            for addr in svrFolders:
+                attachmentManager.gui.attachBox8.addrList[-1].ChangeValue(addr)
+                attachmentManager.gui.attachBox8.typeList[-1].SetValue("Folder")
+                attachmentManager.gui.attachBox8.categoryList[-1].SetValue("Surface Velocity Radar")
+                attachmentManager.gui.attachBox8.add()
+            attachmentManager.gui.attachBox8.updateLabels()
+    except:
+        pass
+
+    try:
+        grpFiles = convertList(Attachment.find('grpFiles').text)
+        if grpFiles:
+            for addr in grpFiles:
+                attachmentManager.gui.attachBox8.addrList[-1].ChangeValue(addr)
+                attachmentManager.gui.attachBox8.typeList[-1].SetValue("File")
+                attachmentManager.gui.attachBox8.categoryList[-1].SetValue("Ground Reference Point")
+                attachmentManager.gui.attachBox8.add()
+            attachmentManager.gui.attachBox8.updateLabels()
+    except:
+        pass
+    
+    try:
+        grpFolders = convertList(Attachment.find('grpFolders').text)
+        if grpFolders:
+            for addr in grpFolders:
+                attachmentManager.gui.attachBox8.addrList[-1].ChangeValue(addr)
+                attachmentManager.gui.attachBox8.typeList[-1].SetValue("Folder")
+                attachmentManager.gui.attachBox8.categoryList[-1].SetValue("Ground Reference Point")
+                attachmentManager.gui.attachBox8.add()
+            attachmentManager.gui.attachBox8.updateLabels()
     except:
         pass
     
