@@ -437,7 +437,6 @@ class InstrumentDeploymentInfoPanel(wx.Panel):
         #frequency text and ctrl
         self.frequencyTxt = wx.StaticText(self, label=self.freqLbl, style=wx.ALIGN_LEFT)
         self.frequencyCmbo = MyComboBox(self, size=(180, -1), choices=self.frequnecies, style=wx.CB_DROPDOWN)
-        self.frequencyCmbo.Bind(wx.EVT_TEXT, self.OnIntText)
         self.frequencyCmbo.Bind(wx.EVT_TEXT, self.OnChangeResetBGColour)
 
         #firmware text and ctrl

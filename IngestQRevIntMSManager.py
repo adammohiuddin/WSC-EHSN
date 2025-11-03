@@ -232,11 +232,14 @@ def AddDischargeDetail(filePath, instrDepManager):
         instrDepManager.modelCmbo = model
         instrDepManager.GetModelCmbo().SetBackgroundColour(color)
     if frequency is not None:
-        if freUnit is not None:
-            if "m" in freUnit.lower():
-                # frequency = str(float(frequency) * 1000)
-                frequency += "000"
-        instrDepManager.frequencyCmbo = str(math.trunc(float(frequency)))
+        if frequency == 'Multi':
+            instrDepManager.frequencyCmbo = frequency
+        else:
+            if freUnit is not None:
+                if "m" in freUnit.lower():
+                    # frequency = str(float(frequency) * 1000)
+                    frequency += "000"
+            instrDepManager.frequencyCmbo = str(math.trunc(float(frequency)))
         instrDepManager.GetFrequencyCmbo().SetBackgroundColour(color)
     if firmware is not None:
         instrDepManager.firmwareCmbo = firmware
