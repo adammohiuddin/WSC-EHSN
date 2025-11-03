@@ -1214,7 +1214,7 @@ class WaterLevelRunPanel(wx.Panel):
             if ckbox.GetWindow().IsChecked():
                 counter += 1
 
-        if (counter == 1 and wl1Name == "") or (counter > 1 and (wl1Name == "" or wl2Name == "")):
+        if (counter == 1 and (wl1Name == "" and wl2Name == "")) or (counter > 1 and (wl1Name == "" or wl2Name == "")):
             dlg = wx.MessageDialog(self, "Water Level Reference column name is not selected, do you want to continue without transfer wlr value?", 'None', wx.YES_NO)
             res = dlg.ShowModal()
             if res == wx.ID_YES:
