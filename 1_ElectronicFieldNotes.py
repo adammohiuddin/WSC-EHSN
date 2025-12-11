@@ -1307,6 +1307,8 @@ class ElectronicHydrometricSurveyNotes:
         self.disMeasManager.GetEndTimeCtrl().GetHourCtrl().Bind(wx.EVT_KEY_DOWN, self.stageMeasManager.gui.CalculateAllMGH)
         self.disMeasManager.GetEndTimeCtrl().GetMinuteCtrl().Bind(wx.EVT_KEY_DOWN, self.stageMeasManager.gui.CalculateAllMGH)
 
+        # Have this triggered from entering a discharge value as well
+        self.disMeasManager.GetDischCtrl().Bind(wx.EVT_KILL_FOCUS, self.stageMeasManager.gui.CalculateAllMGH)
 
     #Ingest from QRev *.xml
     def GetStationIDFromQRev(self):
