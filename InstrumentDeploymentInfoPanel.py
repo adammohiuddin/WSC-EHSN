@@ -1333,6 +1333,7 @@ class InstrumentDeploymentInfoPanel(wx.Panel):
         if self.instrumentCmbo.GetValue() == 'ADCP':
             self.UpdateComboBox(self.modelCmbo, self.modelList1)
             self.EnableAdcpInfo(True)
+            self.metresCtrl.SetValue('')
             if(self.methodCBListBox.GetValue()==self.measurementMethods[2]):
                 self.EnableMidsectionInfo(False)
             else:
@@ -1344,6 +1345,9 @@ class InstrumentDeploymentInfoPanel(wx.Panel):
         elif self.instrumentCmbo.GetValue() == 'ADV':
             self.UpdateComboBox(self.modelCmbo, self.modelList3)
             self.modelCmbo.SetValue('FlowTracker')
+            self.metresCtrl.SetValue('')
+            if self.deploymentCmbo.GetValue() == 'Wading':
+                self.metresCtrl.SetValue('On Rod')
             self.manufactureCmbo.SetValue('SonTek')
             self.EnableAdcpInfo(False)
             self.EnableMidsectionInfo(True)
@@ -1351,6 +1355,9 @@ class InstrumentDeploymentInfoPanel(wx.Panel):
                 self.manager.OnInstrumentChange(2)
         elif self.instrumentCmbo.GetValue() == 'Current Meter':
             self.UpdateComboBox(self.modelCmbo, self.modelList2)
+            self.metresCtrl.SetValue('')
+            if self.deploymentCmbo.GetValue() == 'Wading':
+                self.metresCtrl.SetValue('On Rod')
             self.manufactureCmbo.SetValue('')
             self.EnableAdcpInfo(False)
             self.EnableMidsectionInfo(True)
@@ -1360,6 +1367,7 @@ class InstrumentDeploymentInfoPanel(wx.Panel):
         else:
 
             self.UpdateComboBox(self.modelCmbo, self.modelList2)
+            self.metresCtrl.SetValue('')
             self.manufactureCmbo.SetValue('')
             # if self.methodCBListBox.IsChecked(1):
             if self.methodCBListBox.GetValue() == self.measurementMethods[1]:
