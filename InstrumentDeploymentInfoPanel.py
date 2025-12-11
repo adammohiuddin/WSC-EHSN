@@ -65,8 +65,13 @@ class InstrumentDeploymentInfoPanel(wx.Panel):
         self.modelListSontek = ["", "Rio Grande", "RiverRay", "StreamPro", "RiverPro"]
         self.modelListTRDI = ["", "M9", "S5"]
         self.modelListSommer = ["", "TQ-Tracer"]
+        self.modelListAXIS = ["", "P1378", "P1388", "M1137", "Other"]
+        self.modelListDJI = ["", "Mini2", "Mini3", "Mini4", "Other"]
+        self.modelListSamsung = ["", "S21", "S22", "S23", "Other"]
+        self.modelListApple = ["", "Iphone 12 mini", "Iphone 14", "Iphone 15"]
+        self.modelListOther = [""]
         self.manufactureLbl = "Manufacturer"
-        self.manufactureList = ["", 'SonTek', 'TRDI', 'Sommer']
+        self.manufactureList = ["", 'SonTek', 'TRDI', 'Sommer', 'AXIS', 'DJI', 'Samsung', 'Apple', 'Other']
         self.serialNumLbl = "Serial/Meter Number"
         self.serialNumList = []
         self.frequnecies = []
@@ -1386,6 +1391,19 @@ class InstrumentDeploymentInfoPanel(wx.Panel):
         if self.instrumentCmbo.GetValue().lower() == 'conductivity probe':
             if self.manufactureCmbo.GetValue().lower() == 'sommer':
                 self.UpdateComboBox(self.modelCmbo, self.modelListSommer)
+            else:
+                self.UpdateComboBox(self.modelCmbo, self.modelList1)
+        if self.instrumentCmbo.GetValue().lower() == 'camera':
+            if self.manufactureCmbo.GetValue().lower() == 'axis':
+                self.UpdateComboBox(self.modelCmbo, self.modelListAXIS)
+            elif self.manufactureCmbo.GetValue().lower() == 'dji':
+                self.UpdateComboBox(self.modelCmbo, self.modelListDJI)
+            elif self.manufactureCmbo.GetValue().lower() == 'samsung':
+                self.UpdateComboBox(self.modelCmbo, self.modelListSamsung)
+            elif self.manufactureCmbo.GetValue().lower() == 'apple':
+                self.UpdateComboBox(self.modelCmbo, self.modelListApple)
+            elif self.manufactureCmbo.GetValue().lower() == 'other':
+                self.UpdateComboBox(self.modelCmbo, self.modelListOther)
             else:
                 self.UpdateComboBox(self.modelCmbo, self.modelList1)
 
