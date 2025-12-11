@@ -29,6 +29,10 @@ def AddDischargeSummary(filePath, disMeasManager):
     color = disMeasManager.manager.gui.importedBGColor
     properties = GetData(filePath)['Properties']
 
+    stations = Counter(st['StationType'] for st in GetData(filePath)['Stations'])
+    # Two panels are subtracted as the edges do not need to be considered
+    numberOfPanels = sum(stations.values())-2
+
     # print properties['SiteNumber']
 
     allTimes = []
@@ -149,14 +153,20 @@ def AddDischargeSummary(filePath, disMeasManager):
         wx.PostEvent(disMeasManager.GetDischCtrl(), myEvent)
         disMeasManager.GetDischCtrl().SetBackgroundColour(color)
     if uncertainty is not None and uncertainty != "":
-        disMeasManager.uncertaintyCtrl = str(round(float(uncertainty)*200, 2))
+        if numberOfPanels >= 10:
+            disMeasManager.uncertaintyCtrl = str(round(float(uncertainty)*200, 2))
+        else:
+            disMeasManager.uncertaintyCtrl = str(round(float(uncertainty)*2, 2))
         myEvent = wx.FocusEvent(eventType=wx.wxEVT_KILL_FOCUS, id=wx.NewId())
         myEvent.SetEventObject(disMeasManager.GetUncertaintyCtrl())
         wx.PostEvent(disMeasManager.GetUncertaintyCtrl(), myEvent)
         disMeasManager.GetUncertaintyCtrl().SetBackgroundColour(color)
     
         # Adding uncertainty text to Discharge Activity Remarks
-        dischargeUncertainty = '@ Uncertainty: IVE method, 2-sigma value (2 x Uncertainty Value reported in *.ft File). @'
+        if numberOfPanels >= 10:
+            dischargeUncertainty = '@ Uncertainty: IVE method, 2-sigma value (2 x Uncertainty Value reported in *.ft File). @'
+        else:
+            dischargeUncertainty = '@ Uncertainty: ISO method, 2-sigma value (2 x Uncertainty Value reported in *.ft File). @'
         dischargeRemarks = disMeasManager.dischRemarksCtrl
         if dischargeRemarks != '':
             disMeasManager.dischRemarksCtrl = dischargeRemarks + '\n' + dischargeUncertainty
