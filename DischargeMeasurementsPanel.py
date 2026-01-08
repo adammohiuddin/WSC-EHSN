@@ -836,7 +836,7 @@ All uncertainty values reported here are 2-sigma value
 
 
     def SetCurveCtrl(self, curveCtrl):
-        self.curveCtrl.ChangeValue(curveCtrl)
+        self.curveCtrl.SetValue(curveCtrl)
 
 
     def SetCurveCombo(self, rcList):
