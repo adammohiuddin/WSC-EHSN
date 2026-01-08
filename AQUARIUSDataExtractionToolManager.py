@@ -1302,12 +1302,12 @@ class AQUARIUSDataExtractionToolManager(object):
         #print "time from:" + formatdateFrom
         #print "time to:" + formatdateTo
 
-        if numMinMax is not None:
-            minMaxList = []
-        else:
-            minMaxList = None
-
         for location in locations:
+            if numMinMax is not None:
+                minMaxList = []
+            else:
+                minMaxList = None
+
             dataEmpty = True
             try:
                 parameters = {'LocationIdentifier': location}
