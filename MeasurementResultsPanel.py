@@ -141,9 +141,9 @@ class MeasurementResultsPanel(wx.Panel):
         self.loggerTimeLbl = "Logger Time"
 
         self.loggerTimeTxtLbl = "Logger"
-        self.loggers = ["HG", "HG2"]
+        self.loggers = ["", "HG", "HG2"]
         self.remarkTxtLbl = "Remarks"
-        self.remarkChoice = ["Reset"]
+        self.remarkChoice = ["", "Reset"]
 
         
         self.sensorRef = ['Atmos Pres',
