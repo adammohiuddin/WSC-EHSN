@@ -1875,6 +1875,10 @@ Note: The FlowTracker2 date and time is stored as UTC along with an offset for l
         self.genInfo.stnNumCmbo.ChangeValue(str.upper(self.genInfo.stnNumCmbo.GetValue()))
         self.genInfo.stnNumCmbo.SetInsertionPoint(insertPoint)
 
+        # Populate the inventory management table
+        self.inventoryManagement.updateSavedHydexDetails()
+        returned_val = self.inventoryManagement.inputStationData(True, self.genInfo.stnNumCmbo.GetValue(), "", "", "", "", 'Top')
+        
         if len(self.numsRead) > 0 and len(self.namesRead) > 0:
             if self.genInfo.stnNumCmbo.GetValue() in self.numsRead:
                 self.genInfo.stnNameCtrl.SetValue(self.namesRead[self.numsRead.index(self.genInfo.stnNumCmbo.GetValue())])
@@ -1923,6 +1927,10 @@ Note: The FlowTracker2 date and time is stored as UTC along with an offset for l
             if self.genInfo.stnNameCtrl.GetValue() in self.namesRead:
                 self.genInfo.stnNumCmbo.ChangeValue(self.numsRead[self.namesRead.index(self.genInfo.stnNameCtrl.GetValue())])
                 self.genInfo.tzCmbo.SetValue(self.tz[self.namesRead.index(self.genInfo.stnNameCtrl.GetValue())])
+
+                # Populate the inventory management table
+                self.inventoryManagement.updateSavedHydexDetails()
+                returned_val = self.inventoryManagement.inputStationData(True, self.genInfo.stnNumCmbo.GetValue(), "", "", "", "", 'Top')
 
                 if self.manager is not None:
                     self.manager.OnStationNumChange()
