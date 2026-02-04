@@ -569,6 +569,23 @@ class AttachmentPanel(scrolled.ScrolledPanel):
             for path in GRP_File:
                 if valid(path):
                     zipfile.write(path, Tag + "\\" + ntpath.basename(path))
+            
+            # Adding the details from the Inventory Management tab
+            # This generates a markdown file and returns the filepath
+            # Running this three times deliberately as some changes are not caught in initial call
+            inventory_text_filepath = self.parent.inventoryManagement.printChangesOutput()
+            inventory_text_filepath = self.parent.inventoryManagement.printChangesOutput()
+            inventory_text_filepath = self.parent.inventoryManagement.printChangesOutput()
+
+            if inventory_text_filepath != "":
+
+                # Write the file to the zip
+                if valid(inventory_text_filepath):
+                    zipfile.write(inventory_text_filepath, Tag + "\\" + stnNum + "_" + date + "_Inventory.md")
+                
+                # Delete the file once it is in the zip
+                if os.path.exists(inventory_text_filepath):
+                    os.remove(inventory_text_filepath)
 
             zipfile.close()
             if openSaveDialog:
