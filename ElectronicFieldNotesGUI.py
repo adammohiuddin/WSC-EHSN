@@ -28,7 +28,7 @@ from configparser import SafeConfigParser
 from ZoomPanel import *
 # from RemarksPanel import *
 from InnovTechChecklistPanel import *
-
+from InventoryManagementPanel import *
 from MidsectionImportPanel import MidsectionImportPanel
 
 
@@ -744,12 +744,22 @@ Note: The FlowTracker2 date and time is stored as UTC along with an offset for l
         form7Sizer.Add(self.innovTechChecklist, 1, wx.EXPAND)
         self.form7.SetSizerAndFit(form7Sizer)
 
+        # Inventory Management tab
+        form8Sizer = wx.BoxSizer(wx.VERTICAL)
+        self.form8 = SpecialScrolledPanel(self.layout, style=wx.SIMPLE_BORDER)
+        self.form8.SetupScrolling()
+        self.inventoryManagement = InventoryManagementPanel(self.mode, self.dir, self.form8, style=wx.SIMPLE_BORDER, size=(1, -1))
+
+        form8Sizer.Add(self.inventoryManagement, 1, wx.EXPAND)
+        self.form8.SetSizerAndFit(form8Sizer)
+
         self.layout.AddPage(self.form, "Front Page")
         self.layout.AddPage(self.form2_1, "Level Notes")
         self.layout.AddPage(self.form3, "Moving Boat")
         self.layout.AddPage(self.form4, "Mid-Section")
         self.layout.AddPage(self.form5, "Field Review")
-        self.layout.AddPage(self.form7, "Innov. Tech.")
+        self.layout.AddPage(self.form7, "Other Methods")
+        self.layout.AddPage(self.form8, "Inventory")
 
         # Attachment Page Added
         self.layout.AddPage(self.form6, "FV Package")
