@@ -2492,23 +2492,27 @@ def InnovTechAsXMLTree(InnovTechData, innovTechChecklistManager):
 
 # Set InnovTech Checklist variables from existing XML structure
 def InnovTechFromXML(InnovTechData, innovTechChecklistManager):
-    
-    depType = InnovTechData.find('dependencyType').text
-    innovTechChecklistManager.depType = "" if depType is None else depType
-    monitoringType = InnovTechData.find('monitoringType').text
-    innovTechChecklistManager.monitoringType = "" if monitoringType is None else monitoringType
-    
-    InnovTechTable = InnovTechData.find('InnovTechTable')
+    try:
+        depType = InnovTechData.find('dependencyType').text
+        innovTechChecklistManager.depType = "" if depType is None else depType
+        monitoringType = InnovTechData.find('monitoringType').text
+        innovTechChecklistManager.monitoringType = "" if monitoringType is None else monitoringType
+        
+        InnovTechTable = InnovTechData.find('InnovTechTable')
 
-    for InnovTechTableRow in InnovTechTable.findall('InnovTechTableRow'):
-        row = int(InnovTechTableRow.get('row'))
+        for InnovTechTableRow in InnovTechTable.findall('InnovTechTableRow'):
+            row = int(InnovTechTableRow.get('row'))
 
-        text = InnovTechTableRow.find('text').text
+            text = InnovTechTableRow.find('text').text
 
-        innovTechChecklistManager.SetCtrlSizerVal(row, "" if text is None else text)
+            innovTechChecklistManager.SetCtrlSizerVal(row, "" if text is None else text)
 
-    notes = InnovTechData.find('notes').text
-    innovTechChecklistManager.notesCtrl = "" if notes is None else notes
+        notes = InnovTechData.find('notes').text
+        innovTechChecklistManager.notesCtrl = "" if notes is None else notes
+    except:
+        innovTechChecklistManager.depType = ""
+        innovTechChecklistManager.monitoringType = ""
+        innovTechChecklistManager.notesCtrl = ""
 
 
 # Create XML structure for Moving Boat Method information
