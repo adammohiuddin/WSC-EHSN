@@ -145,8 +145,8 @@ class WaterLevelRunPanel(wx.Panel):
         self.loggerLbl2 = "HG2"
         self.cwlLbl = "Corrected Water Level"
         self.hintLbl = "Transfer selected elevation and reference station to Direct Water Level table"
-        self.correctCmtBtnHint = 'Please note that these comments are uploaded to the to "Activity Remarks Management" section of Leveling Activity in AQUARIUS' \
-                + 'and these comments are also printed for Benchmark History Report.'
+        self.correctCmtBtnHint = 'Please note that these comments are uploaded to the "Activity Remarks Management" section of Leveling Activity in AQUARIUS' \
+                + ' and these comments are also printed for Benchmark History Report.'
         self.transferSumLbl = "Transfer to Front Page"
         self.transferConfirmationMsg = "Corrected water level  and logger values have been transfered"
         self.transferToFrontHintLbl = "Transfer to front page"
