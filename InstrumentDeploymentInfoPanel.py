@@ -1069,6 +1069,8 @@ class InstrumentDeploymentInfoPanel(wx.Panel):
                     if self.manager.manager is not None:
                         self.manager.manager.FlatNoteBook.GetPage(2).Enable(False)
                         self.manager.manager.FlatNoteBook.GetPage(3).Enable(True)
+            else:
+                self.UpdateComboBox(self.instrumentCmbo, self.instrumentList)
 
         else:
             self.InfoUpdate(None)
