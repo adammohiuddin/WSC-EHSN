@@ -1962,10 +1962,10 @@
                 <li style="text-align:left;">
                     <xsl:choose>
 			            <xsl:when test="SIT!=''">
-					        <font size="4">&#x2714;</font><c>Site (general view of the monitoring area)     </c>
+					        <font size="4">&#x2714;</font><c>Site (general view of monitoring area)     </c>
 			            </xsl:when>
 			            <xsl:otherwise>
-				            <font size="4">&#x2751;</font><c>Site (general view of the monitoring area)     </c>
+				            <font size="4">&#x2751;</font><c>Site (general view of monitoring area)     </c>
 			            </xsl:otherwise>
 		            </xsl:choose>
 		        </li>
