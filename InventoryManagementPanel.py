@@ -318,7 +318,7 @@ class SummaryDialog(wx.Dialog):
         Lbl4 = wx.StaticText(self, label='Make: ')
         Lbl5 = wx.StaticText(self, label='Model: ')
         Lbl6 = wx.StaticText(self, label='Serial Number: ')
-        Lbl7 = wx.StaticText(self, label='Firmware Version: ')
+        Lbl7 = wx.StaticText(self, label='Firmware/Software: ')
         Lbl8 = wx.StaticText(self, label='Installation Date: ')
         Lbl9 = wx.StaticText(self, label='Effective Date: ')
         Lbl10 = wx.StaticText(self, label='Remark: ')
@@ -450,22 +450,50 @@ class HelpDialog(wx.Dialog):
 
         popupSizer = wx.BoxSizer(wx.VERTICAL)
 
-        Lbl1 = wx.StaticText(self, label='Device at station not listed here: ')
-        Lbl2 = wx.StaticText(self, label='Device listed here not at station: ')
+        Lbl1 = wx.StaticText(self, label='A device is installed: ')
+        Itm1 = wx.StaticText(self, label='Search for the device by serial number and transfer to station. Indicate the install date.')
+
+        Lbl2 = wx.StaticText(self, label='A device is removed: ')
+        Itm2 = wx.StaticText(self, label='Transfer the device to the appropriate warehouse, set status and deployment status.')
+
+        Lbl3 = wx.StaticText(self, label='A change to a device is required: ')
+        Itm3 = wx.StaticText(self, label='Make the change to the device and set the effective date appropriately with a remark.')
+        
+        Lbl4 = wx.StaticText(self, label='Device at station not listed here: ')
+        Itm4 = wx.StaticText(self, label='Search by serial number and transfer to station; if not found, add as new device.')
+
+        Lbl5 = wx.StaticText(self, label='Device listed here not at station: ')
+        Itm5 = wx.StaticText(self, label='Transfer to known warehouse; if unknown, set inactive with remark "location unknown".')
+
         Lbl1.SetFont(fontTitle)
         Lbl2.SetFont(fontTitle)
-        Itm1 = wx.StaticText(self, label='Search by serial number and transfer to station; if not found, add as new device.')
-        Itm2 = wx.StaticText(self, label='Transfer to known warehouse; if unknown, set inactive with remark "location unknown."')
+        Lbl3.SetFont(fontTitle)
+        Lbl4.SetFont(fontTitle)
+        Lbl5.SetFont(fontTitle)
+
         # Wrapping text
         Itm1.Wrap(240)
         Itm2.Wrap(240)
+        Itm3.Wrap(240)
+        Itm4.Wrap(240)
+        Itm5.Wrap(240)
+
         Itm1.SetFont(fontItem)
         Itm2.SetFont(fontItem)
+        Itm3.SetFont(fontItem)
+        Itm4.SetFont(fontItem)
+        Itm5.SetFont(fontItem)
 
         popupSizer.Add(Lbl1, 0, wx.ALL | wx.EXPAND, 5)
         popupSizer.Add(Itm1, 0, wx.ALL | wx.EXPAND, 5)
         popupSizer.Add(Lbl2, 0, wx.ALL | wx.EXPAND, 5)
         popupSizer.Add(Itm2, 0, wx.ALL | wx.EXPAND, 5)
+        popupSizer.Add(Lbl3, 0, wx.ALL | wx.EXPAND, 5)
+        popupSizer.Add(Itm3, 0, wx.ALL | wx.EXPAND, 5)
+        popupSizer.Add(Lbl4, 0, wx.ALL | wx.EXPAND, 5)
+        popupSizer.Add(Itm4, 0, wx.ALL | wx.EXPAND, 5)
+        popupSizer.Add(Lbl5, 0, wx.ALL | wx.EXPAND, 5)
+        popupSizer.Add(Itm5, 0, wx.ALL | wx.EXPAND, 5)
 
         buttonsSizer = self.CreateButtonSizer(wx.OK | wx.CANCEL)
         popupSizer.Add(buttonsSizer, 0, wx.ALL | wx.EXPAND, 5)
@@ -618,7 +646,7 @@ class InventoryManagementPanel(wx.Panel):
                          'Model',
                          'Serial Number',
                          'Firmware Version',
-                         #'Installation Date',
+                         'Installation Date',
                          'Effective Date',
                          'Remark']
 
@@ -656,7 +684,7 @@ class InventoryManagementPanel(wx.Panel):
         self.deviceMakeLbl = "Device Make"
         self.deviceModelLbl = "Device Model"
         self.serialNumberLbl = "Serial Number"
-        self.firmwareLbl = "Firmware"
+        self.firmwareLbl = "Firmware / Software"
         self.installationDateLbl = "Installation Date"
         self.effectiveDateLbl = "Effective Date"
         self.remarkLbl = "Remark"
@@ -3196,8 +3224,10 @@ class InventoryManagementPanel(wx.Panel):
                     self.SetdeviceModelVal(self.entryNumTop-2, row['Model'], 'Top')
                     self.SetserialNumberVal(self.entryNumTop-2, row['Serial Number'], 'Top')
                     self.SetfirmwareVal(self.entryNumTop-2, row['Firmware Version'], 'Top')
-                    # Installation date is currently set to empty
-                    self.SetinstallationDateVal(self.entryNumTop-2, '', 'Top')
+                    if 'Installation Date' in row:
+                        self.SetinstallationDateVal(self.entryNumTop-2, row['Installation Date'], 'Top')
+                    else:
+                        self.SetinstallationDateVal(self.entryNumTop-2, '', 'Top')
                     self.SeteffectiveDateVal(self.entryNumTop-2, row['Effective Date'], 'Top')
                     self.SetremarkVal(self.entryNumTop-2, row['Remark'], 'Top')
                     
@@ -3242,8 +3272,10 @@ class InventoryManagementPanel(wx.Panel):
                     self.SetdeviceModelVal(self.entryNumBottom-2, row['Model'], 'Bottom')
                     self.SetserialNumberVal(self.entryNumBottom-2, row['Serial Number'], 'Bottom')
                     self.SetfirmwareVal(self.entryNumBottom-2, row['Firmware Version'], 'Bottom')
-                    # Installation date is currently set to empty
-                    self.SetinstallationDateVal(self.entryNumBottom-2, '', 'Bottom')
+                    if 'Installation Date' in row:
+                        self.SetinstallationDateVal(self.entryNumBottom-2, row['Installation Date'], 'Bottom')
+                    else:
+                        self.SetinstallationDateVal(self.entryNumBottom-2, '', 'Bottom')
                     self.SeteffectiveDateVal(self.entryNumBottom-2, row['Effective Date'], 'Bottom')
                     self.SetremarkVal(self.entryNumBottom-2, row['Remark'], 'Bottom')
                     
@@ -3565,6 +3597,8 @@ class InventoryManagementPanel(wx.Panel):
                     # Update values in the top dataframe
                     self.top_table_dataframe.at[index, 'Serial Number'] = row['Serial Number']
                     self.top_table_dataframe.at[index, 'Firmware Version'] = row['Firmware Version']
+                    if 'Installation Date' in self.top_table_dataframe.columns:
+                        self.top_table_dataframe.at[index, 'Installation Date'] = row['Installation Date']
                     self.top_table_dataframe.at[index, 'Effective Date'] = timestamp
                     self.top_table_dataframe.at[index, 'Status'] = row['Old Status Change']
                     self.top_table_dataframe.at[index, 'Deployment Status'] = row['Deployment Status']
@@ -3680,8 +3714,8 @@ class InventoryManagementPanel(wx.Panel):
         self.updateDataframeVal('Model', index, self.GetdeviceModelVal(index, 'Top'))
         self.updateDataframeVal('Serial Number', index, self.GetserialNumberVal(index, 'Top'))
         self.updateDataframeVal('Firmware Version', index, self.GetfirmwareVal(index, 'Top'))
-        # Installation date is currently unused
-        #self.updateDataframeVal('Installation Date', index, self.GetinstallationDateVal(index, 'Top'))
+        if 'Installation Date' in self.top_table_dataframe.columns:
+            self.updateDataframeVal('Installation Date', index, self.GetinstallationDateVal(index, 'Top'))
         self.updateDataframeVal('Effective Date', index, self.GeteffectiveDateVal(index, 'Top'))
         self.updateDataframeVal('Remark', index, self.GetremarkVal(index, 'Top'))
 
@@ -3929,16 +3963,16 @@ class InventoryManagementPanel(wx.Panel):
             textOut.append('**Device Updated:**\n')
             text_array = []
             for key in self.keysList:
-
-                if key == "Remark":
-                    text_array = self.wrapMultipleDiff(key, text_array, original_list[key], new_list[key])
-                else:
-                    val1 = original_list[key]
-                    val2 = new_list[key]
-                    if str(val1).replace(" ", "").replace('\r', '').replace('\n', '') == str(val2).replace(" ", "").replace('\r', '').replace('\n', ''):
-                        text_array.append([key+': ', str(val1), str(val2)])
+                if key in original_list:
+                    if key == "Remark":
+                        text_array = self.wrapMultipleDiff(key, text_array, original_list[key], new_list[key])
                     else:
-                        text_array.append([key+': ', str(val1), '**'+str(val2)+'**'])
+                        val1 = original_list[key]
+                        val2 = new_list[key]
+                        if str(val1).replace(" ", "").replace('\r', '').replace('\n', '') == str(val2).replace(" ", "").replace('\r', '').replace('\n', ''):
+                            text_array.append([key+': ', str(val1), str(val2)])
+                        else:
+                            text_array.append([key+': ', str(val1), '**'+str(val2)+'**'])
 
             # Currently loggers are excluded
             if new_list['Communication Information'] == 'Yes' and new_list['Category'] != 'LOGGER':
@@ -3967,28 +4001,28 @@ class InventoryManagementPanel(wx.Panel):
         textOut.append('**'+title+'**\n')
         text_array = []
         for key in self.keysList:
-
-            if key == "Remark":
-                text_array = self.wrapMultipleTrasnfer(key, text_array, base_list[key], original_list[key], new_list[key])
-            else:
-                val0 = base_list[key]
-                val1 = original_list[key]
-                val2 = new_list[key]
-                displayVal1 = ''
-                displayVal2 = ''
-                if str(val0).replace(" ", "").replace('\r', '').replace('\n', '') == str(val1).replace(" ", "").replace('\r', '').replace('\n', ''):
-                    displayVal1 = str(val1)
+            if key in base_list:
+                if key == "Remark":
+                    text_array = self.wrapMultipleTrasnfer(key, text_array, base_list[key], original_list[key], new_list[key])
                 else:
-                    displayVal1 = '**'+str(val1)+'**'
-                if str(val1).replace(" ", "").replace('\r', '').replace('\n', '') == str(val2).replace(" ", "").replace('\r', '').replace('\n', ''):
-                    displayVal2 = str(val2)
-                else:
-                    displayVal2 = '**'+str(val2)+'**'
-                
-                # Account for the distance being off because the **** have been removed in the markup file writing
-                if "**" in displayVal1:
-                    displayVal2 = ' ' + ' ' + ' ' + ' ' + displayVal2
-                text_array.append([key+': ', displayVal1, displayVal2])
+                    val0 = base_list[key]
+                    val1 = original_list[key]
+                    val2 = new_list[key]
+                    displayVal1 = ''
+                    displayVal2 = ''
+                    if str(val0).replace(" ", "").replace('\r', '').replace('\n', '') == str(val1).replace(" ", "").replace('\r', '').replace('\n', ''):
+                        displayVal1 = str(val1)
+                    else:
+                        displayVal1 = '**'+str(val1)+'**'
+                    if str(val1).replace(" ", "").replace('\r', '').replace('\n', '') == str(val2).replace(" ", "").replace('\r', '').replace('\n', ''):
+                        displayVal2 = str(val2)
+                    else:
+                        displayVal2 = '**'+str(val2)+'**'
+                    
+                    # Account for the distance being off because the **** have been removed in the markup file writing
+                    if "**" in displayVal1:
+                        displayVal2 = ' ' + ' ' + ' ' + ' ' + displayVal2
+                    text_array.append([key+': ', displayVal1, displayVal2])
 
         # Currently loggers are excluded
         if (base_list['Communication Information'] == 'Yes' and base_list['Category'] != 'LOGGER') or \
@@ -4032,19 +4066,19 @@ class InventoryManagementPanel(wx.Panel):
         textOut.append('**Device Added:**\n')
         text_array = []
         for key in self.keysList:
-            
-            if key == "Remark":
-                if str(list[key]).replace(" ", "").replace('\r', '').replace('\n', '') != '':
-                    wrapped_remark = wrap(str(list[key]), width=20)
-                    for index, substring in enumerate(wrapped_remark):
-                        if index == 0:
-                            text_array.append([key+': ', str(substring)])
-                        else:
-                            text_array.append(['.', str(substring)])
+            if key in list:            
+                if key == "Remark":
+                    if str(list[key]).replace(" ", "").replace('\r', '').replace('\n', '') != '':
+                        wrapped_remark = wrap(str(list[key]), width=20)
+                        for index, substring in enumerate(wrapped_remark):
+                            if index == 0:
+                                text_array.append([key+': ', str(substring)])
+                            else:
+                                text_array.append(['.', str(substring)])
+                    else:
+                        text_array.append([key+': ', ' '])
                 else:
-                    text_array.append([key+': ', ' '])
-            else:
-                text_array.append([key+': ', str(list[key])])
+                    text_array.append([key+': ', str(list[key])])
         
         # Currently loggers are excluded
         if list['Communication Information'] == 'Yes' and list['Category'] != 'LOGGER':
